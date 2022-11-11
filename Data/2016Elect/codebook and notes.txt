@@ -1,0 +1,84 @@
+If you use this data, please cite it as:
+	Pettigrew, Stephen, 2016, "November 2016 general election results (county-level)", http://dx.doi.org/10.7910/DVN/MLLQDH, Harvard Dataverse, V1. 
+
+If you find any errors in the data, please let me know so I can make the corrections. Also if you supplement the data with information about candidate spending/ICPSR ID numbers/candidate background information/better data from KS or MS and are willing to share, please do! My email address is pettigrew@fas.harvard.edu
+
+######################
+###### Codebook ######
+######################
+
+office
+	elected office name
+	values: "President" | "Senate" | "Governor" | "US House atlarge" | "US House [district number]"
+	
+state
+	abbreviation for state name, including DC
+	
+jurisdiction
+	name of the jurisdiction from which these election results came. In almost all states, the jurisdiction refers to the county name. Exceptions are:
+		AK: districts
+		CT, MA, ME, NH, RI, VT: towns and cities
+		DC: wards
+		KS, MS: statewide (due to lack of data availability at the county level)
+		LA: parish
+		MO, VA: mostly counties, although a few independent cities that count their own election returns (such as St. Louis, MO and Fairfax, VA)
+		
+fipscode
+	fipscode that corresponds with the jurisdiction name. Trailing zeros were maintained, so that the fipscodes are consistent with those included in the EAVS data from the Election Assistance Commission.
+	
+candidate (only long files)	
+	name of the candidate, exactly as it appears in the official vote returns.
+
+	The exception to this is presidential candidates who appeared on the ballot in multiple states. In those cases, I made sure that 
+	the names of the most common candidates (including Clinton, Trump, Johnson, Stein, McMullin, Cassell, La Riva, and de la Fuente) were consistent between states. In other words, Clinton's results appear under "Hillary Clinton," even if she was listed on the ballot as "Clinton, Hillary" or "Hillary Clinton and Tim Kaine." It's possible that there are some candidates who appeared on ballots in just two or three states, and I didn't properly adjust their names to be consistent.
+
+party (only long files)
+	candidate's party
+	Presidential candidate party were cleaned so that they're consistent across states. I converted a candidate's party to the party that was the most common all states. For example, Jill Stein was the Green Party nominee in most states, although there were some where she was listed as an "independent" or "write-in." In the final data, Stein's party is listed as "Green" in every state.
+
+votes (only long files)
+	total number of votes received by this candidate
+
+totalvotes
+	total number of votes cast 
+	Note: this is NOT equal to the number of total ballots cast, or even the total number of ballots cast for this office. Some states do not report undervotes or have different rules about how write-ins are reported.
+
+clinton; trump; johnson; stein; other (president-wide only)
+	votes received by each candidate. Values of NA for "Stein" occur in states where she was not listed on the ballot and they did not specifically count write-in votes for her. Values of NA for "other" occur in states which only released counts of candidates listed on the ballot.
+	
+candidate.dem/candidate.rep (senate-wide, house-wide, governor-wide only)
+	name of the Democratic or Republican candidate, as it appears in the official election returns
+	In cases featuring multiple Democratic (or Republican) candidates, this column gives the name of the Democrat (or Republican) who received the most votes state-wide or district-wide
+	
+votes.dem/votes.rep (senate-wide, house-wide, governor-wide only)
+	votes received by the Democratic or Republican candidate named in candidate.dem/candidate.rep
+	
+candidate.other/party.other/votes.other (senate-wide, house-wide, governor-wide only)
+	name, party, and votes received by any non-Democrat/Republican who received at least 10% of the vote state-wide or district-wide.
+	This column may also contain information about a Democrat or Republican who received more than 10% of the vote, but was not the top vote recipient for their party. See California's Senate race as an example.
+	See the note below about Wisconsin's 4th congressional district.
+	
+votes.all.others (senate-wide, house-wide, governor-wide only)
+	votes received by all candidates not included in votes.dem, votes.rep, and votes.other	
+	
+dem.two.party (wide only)
+	Democratic share of the two-party vote.
+	In elections featuring only two Democrats or two Republicans (as can happen in CA, LA, and WA), this value has been set to either 0 or 1. See the Senate race in California as an example.
+
+
+
+#######################
+######## Notes ########
+#######################
+	
+Wisconsin: results for the presidential race are the initial certified ones, not those from the recount. Differences are negligible.
+
+Wisconsin's 4th congressional district had two non-D/R candidates receiving more than 10% of the vote. Robert R. Raymond (Independent) received 11.7% of the vote and Andy Craig (Libertarian) received 11.3% of the vote. Only Raymond appears in the "house-wide" dataset
+
+Kansas and Mississippi don't have county-level returns in this dataset, since they're not on their Secretary of State sites. If you spend the time collecting the final county-level returns in either of these states, please share so I can include them in this dataset.
+
+New York: I've combined the vote totals of candidates who appear on multiple party lines. For example, Trump was listed under the Republican and Conservative Party tickets. In the final dataset, I've added together his votes for each party and labeled him as a Republican only.
+
+New York: A few days after the state release its certified returns, it was discovered that the numbers in some NYC boroughs were incorrect. The data here reflect the updated certified results.
+
+Florida and Oklahoma: These states don't report election returns for uncontested elections, so I added FL-24 and OK-1 House districts into the dataset. I gave 1 vote to the uncontested candidates in each county included in these two congressional districts
